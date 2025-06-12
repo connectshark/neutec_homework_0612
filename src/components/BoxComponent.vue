@@ -1,11 +1,17 @@
 <template>
-  <div class="box">
+  <div class="box" :class="{ active: isActive }">
     <div class="content"></div>
   </div>
 </template>
 
 
 <script setup>
+defineProps({
+  isActive: {
+    type: Boolean,
+    default: true
+  }
+})
 </script>
 
 <style scoped>
@@ -22,18 +28,6 @@
   box-sizing: border-box;
   padding: 2px;
   border-radius: 10px;
-  background-image: conic-gradient(
-    from var(--angle),
-    white 0deg,
-    white 30deg,
-    transparent 30deg,
-    transparent 180deg,
-    white 180deg,
-    white 210deg,
-    transparent 210deg,
-    transparent 360deg
-  );
-  animation: spin-angle 1s ease infinite;
 }
 @keyframes spin-angle {
   0% {
@@ -48,5 +42,19 @@
   height: 100%;
   border-radius: 10px;
   background-color: var(--background-color);
+}
+.active {
+  background-image: conic-gradient(
+    from var(--angle),
+    white 0deg,
+    white 30deg,
+    transparent 30deg,
+    transparent 180deg,
+    white 180deg,
+    white 210deg,
+    transparent 210deg,
+    transparent 360deg
+  );
+  animation: spin-angle 1s ease infinite;
 }
 </style>

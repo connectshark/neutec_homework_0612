@@ -1,7 +1,10 @@
 <template>
 <main>
   <div class="container">
-    <BoxComponent v-for="(item, index) in allSquares" :key="index + '-' + allSquares"/>
+    <BoxComponent
+      v-for="(item, index) in allSquares" :key="index + '-' + allSquares + '-' + selectType"
+      :isActive="selectType === 'Random' ? randomFiveStar.includes(index + 1) : true"
+    />
   </div>
   <div class="btn-group">
     <label class="btn" v-for="size in allSizes" :class="{ active: selectSize === size }" :key="size">
@@ -11,7 +14,7 @@
   </div>
   <div class="btn-group">
     <label class="btn" v-for="type in types" :key="type" :class="{ active: selectType === type }" >
-      <input class="sr-only" type="radio" :value="type" name="type" v-model="selectType">
+      <input class="sr-only" :disabled="selectSize === 1" type="radio" :value="type" name="type" v-model="selectType">
       <span>{{ type }}</span>
     </label>
   </div>
@@ -20,7 +23,7 @@
 
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import BoxComponent from './components/BoxComponent.vue'
 const selectSize = ref(1)
 const allSizes = [1, 3, 5, 10]
@@ -29,6 +32,22 @@ const allSquares = computed(() => selectSize.value * selectSize.value)
 
 const types = ['All', 'Random']
 const selectType = ref('All')
+
+const getRandomUniqueIntegers = (max) => {
+  const set = new Set()
+  while (set.size < 5) {
+    set.add(Math.floor(Math.random() * max) + 1)
+  }
+  return Array.from(set)
+}
+const randomFiveStar = ref([])
+watch(selectSize, value => {
+  if (value === 1) {
+    selectType.value = 'All'
+  } else {
+    randomFiveStar.value = getRandomUniqueIntegers(allSquares.value)
+  }
+})
 </script>
 
 <style scoped>
