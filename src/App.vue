@@ -18,6 +18,9 @@
       <span>{{ type }}</span>
     </label>
   </div>
+  <div class="row">
+    <HeartComponent v-for="item in 5"/>
+  </div>
 </main>
 </template>
 
@@ -25,6 +28,7 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
 import BoxComponent from './components/BoxComponent.vue'
+import HeartComponent from './components/HeartComponent.vue'
 const selectSize = ref(1)
 const allSizes = [1, 3, 5, 10]
 
@@ -100,5 +104,9 @@ watch(selectSize, value => {
 }
 .btn.active {
   background-color: #b39cd0;
+}
+.row {
+  display: flex;
+  flex-flow: row wrap;
 }
 </style>
