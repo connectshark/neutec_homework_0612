@@ -12,6 +12,8 @@ jobs:
           npm install
           npm run build
 
+        env:
+          VITE_SITE_NAME : ${{ secrets.VITE_SITE_NAME }}
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
